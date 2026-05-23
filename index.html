@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Niko Wallet</title>
+
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family: "Comic Sans MS", "Poppins", sans-serif;
+    }
+
+    body{
+      min-height:100vh;
+      background:
+        linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
+        url('https://images7.alphacoders.com/747/747498.jpg');
+      background-size: cover;
+      background-position: center;
+      padding: 20px;
+      color:#ff4f93;
+    }
+
+    .container{
+      max-width:500px;
+      margin:auto;
+    }
+
+    .card{
+      background: rgba(255,255,255,0.88);
+      border-radius: 28px;
+      padding: 22px;
+      box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
+      border: 3px solid #ffd4ea;
+      backdrop-filter: blur(5px);
+    }
+
+    h1{
+      text-align:center;
+      font-size: 2rem;
+      margin-bottom: 18px;
+      color:#ff4f93;
+    }
+
+    .total{
+      text-align:center;
+      font-size: 3rem;
+      font-weight:bold;
+      margin-bottom:20px;
+      color:#ff1493;
+    }
+
+    .filters{
+      display:flex;
+      justify-content:center;
+      margin-bottom:20px;
+    }
+
+    select{
+      padding:10px 14px;
+      border-radius:16px;
+      border:none;
+      background:#ffe5f1;
+      color:#ff1493;
+      font-weight:bold;
+      font-size:1rem;
+      outline:none;
+    }
+
+    .movements{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+
+    .movement{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:14px;
+      border-radius:18px;
+      font-weight:bold;
+      animation: fadeIn .3s ease;
+    }
+
+    .income{
+      background:#e8ffe8;
+      border-left:8px solid #45c96b;
+      color:#229145;
+    }
+
+    .expense{
+      background:#fff0f0;
+      border-left:8px solid #ff5c7a;
+      color:#cc2950;
+    }
+
+    .month{
+      font-size:1rem;
+    }
+
+    .amount{
+      font-size:1.1rem;
+    }
+
+    .btn-more{
+      margin-top:18px;
+      width:100%;
+      border:none;
+      padding:14px;
+      border-radius:18px;
+      background:#ff9cc7;
+      color:white;
+      font-size:1rem;
+      font-weight:bold;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .btn-more:hover{
+      transform:scale(1.02);
+      background:#ff7fb6;
+    }
+
+    .empty{
+      text-align:center;
+      color:#d66a97;
+      margin-top:10px;
+    }
+
+    @keyframes fadeIn{
+      from{
+        opacity:0;
+        transform:translateY(10px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @media(max-width:480px){
+      .total{
+        font-size:2.4rem;
+      }
+
+      h1{
+        font-size:1.6rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="card">
+
+      <h1>Nikolai Wallet ✨</h1>
+
+      <div class="total" id="total">$0.00</div>
+
+      <div class="filters">
+        <select id="monthFilter"></select>
+      </div>
+
+      <div class="movements" id="movements"></div>
+
+      <button class="btn-more" id="btnMore">
+        Ver más ✨
+      </button>
+
+    </div>
+  </div>
+<script src="movimientos.js"></script>
+  <script>
+    const totalElement = document.getElementById("total");
+    const movementsElement = document.getElementById("movements");
+    const monthFilter = document.getElementById("monthFilter");
+    const btnMore = document.getElementById("btnMore");
+
+    let showingAll = false;
+
+    // TOTAL GENERAL
+    const totalGeneral = movimientos.reduce((acc, mov) => {
+      return acc + mov.cantidad;
+    }, 0);
+
+    totalElement.textContent =
+      `$${totalGeneral.toFixed(2)}`;
+
+    // MESES UNICOS
+    const meses = [...new Set(movimientos.map(m => m.mes))];
+
+    monthFilter.innerHTML =
+      `<option value="Todos">Todos los meses</option>`;
+
+    meses.forEach(mes => {
+      monthFilter.innerHTML += `
+        <option value="${mes}">
+          ${mes}
+        </option>
+      `;
+    });
+
+    // RENDER MOVIMIENTOS
+    function renderMovements(){
+
+      const selectedMonth = monthFilter.value;
+
+      let filtered = [...movimientos].reverse();
+
+      if(selectedMonth !== "Todos"){
+        filtered = filtered.filter(
+          mov => mov.mes === selectedMonth
+        );
+      }
+
+      movementsElement.innerHTML = "";
+
+      if(filtered.length === 0){
+        movementsElement.innerHTML = `
+          <div class="empty">
+            No hay movimientos ✨
+          </div>
+        `;
+
+        btnMore.style.display = "none";
+        return;
+      }
+
+      const visibleMovements = showingAll
+        ? filtered
+        : filtered.slice(0, 8);
+
+      visibleMovements.forEach(mov => {
+
+        const isIncome = mov.cantidad >= 0;
+
+        const div = document.createElement("div");
+
+        div.className =
+          `movement ${isIncome ? "income" : "expense"}`;
+
+        div.innerHTML = `
+          <div class="month">
+            ${mov.mes}
+          </div>
+
+          <div class="amount">
+            ${isIncome ? "+" : "-"}
+            $${Math.abs(mov.cantidad).toFixed(2)}
+          </div>
+        `;
+
+        movementsElement.appendChild(div);
+      });
+
+      // BOTON VER MAS
+      if(filtered.length <= 8){
+        btnMore.style.display = "none";
+      }else{
+        btnMore.style.display = "block";
+        btnMore.textContent = showingAll
+          ? "Ver menos ✨"
+          : "Ver más ✨";
+      }
+    }
+
+    monthFilter.addEventListener("change", () => {
+      showingAll = false;
+      renderMovements();
+    });
+
+    btnMore.addEventListener("click", () => {
+      showingAll = !showingAll;
+      renderMovements();
+    });
+
+    renderMovements();
+
+  </script>
+
+</body>
+</html>
