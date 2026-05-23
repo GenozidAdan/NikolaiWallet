@@ -1,149 +1,385 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Niko Wallet</title>
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#ff8fc7">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
+
+  <title>Nikolai Wallet</title>
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+
+  <meta
+    name="theme-color"
+    content="#ff8fc7"
+  />
+
   <style>
+
     *{
       margin:0;
       padding:0;
       box-sizing:border-box;
-      font-family: "Comic Sans MS", "Poppins", sans-serif;
+      font-family:"Comic Sans MS","Poppins",sans-serif;
     }
 
     body{
+
       min-height:100vh;
+
+      padding:20px;
+
       background:
-        linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)),
-        url('https://images7.alphacoders.com/747/747498.jpg');
-      background-size: cover;
-      background-position: center;
-      padding: 20px;
+      linear-gradient(
+        rgba(255,255,255,0.45),
+        rgba(255,255,255,0.45)
+      ),
+      url("https://i.pinimg.com/736x/91/b3/95/91b395640cd6094fe2e402eae2118363.jpg");
+
+      background-size:cover;
+      background-position:center;
+
       color:#ff4f93;
     }
 
     .container{
-      max-width:500px;
+      max-width:520px;
       margin:auto;
     }
 
     .card{
-      background: rgba(255,255,255,0.88);
-      border-radius: 28px;
-      padding: 22px;
-      box-shadow: 0 8px 25px rgba(255, 105, 180, 0.2);
-      border: 3px solid #ffd4ea;
-      backdrop-filter: blur(5px);
+
+      background:rgba(255,255,255,0.88);
+
+      backdrop-filter:blur(6px);
+
+      border-radius:28px;
+
+      padding:22px;
+
+      border:3px solid #ffd4ea;
+
+      box-shadow:0 8px 25px rgba(255,105,180,0.18);
     }
 
     h1{
+
       text-align:center;
-      font-size: 2rem;
-      margin-bottom: 18px;
+
+      margin-bottom:10px;
+
       color:#ff4f93;
+
+      font-size:2rem;
+    }
+
+    .month-indicator{
+
+      text-align:center;
+
+      margin-bottom:18px;
+
+      font-weight:bold;
+
+      color:#ff69a6;
+
+      font-size:1rem;
     }
 
     .total{
+
       text-align:center;
-      font-size: 3rem;
+
+      font-size:3rem;
+
       font-weight:bold;
+
       margin-bottom:20px;
+
       color:#ff1493;
+    }
+
+    .form-box{
+
+      display:flex;
+
+      flex-direction:column;
+
+      gap:12px;
+
+      margin-bottom:24px;
+
+      background:#fff4fa;
+
+      border-radius:22px;
+
+      padding:16px;
+    }
+
+    input{
+
+      width:100%;
+
+      border:none;
+
+      border-radius:16px;
+
+      padding:14px;
+
+      outline:none;
+
+      background:#ffe5f1;
+
+      color:#ff1493;
+
+      font-size:1rem;
+
+      font-weight:bold;
+    }
+
+    input::placeholder{
+      color:#ff7eb0;
+    }
+
+    .btn-add{
+
+      border:none;
+
+      border-radius:18px;
+
+      padding:14px;
+
+      background:#ff9cc7;
+
+      color:white;
+
+      font-size:1rem;
+
+      font-weight:bold;
+
+      cursor:pointer;
+
+      transition:.2s;
+    }
+
+    .btn-add:hover:not(:disabled){
+
+      transform:scale(1.02);
+
+      background:#ff7fb6;
+    }
+
+    .btn-add:disabled{
+
+      opacity:.5;
+
+      cursor:not-allowed;
     }
 
     .filters{
-      display:flex;
-      justify-content:center;
-      margin-bottom:20px;
+      margin-bottom:18px;
     }
 
     select{
-      padding:10px 14px;
-      border-radius:16px;
+
+      width:100%;
+
       border:none;
-      background:#ffe5f1;
-      color:#ff1493;
-      font-weight:bold;
-      font-size:1rem;
+
+      border-radius:16px;
+
+      padding:14px;
+
       outline:none;
+
+      background:#ffe5f1;
+
+      color:#ff1493;
+
+      font-size:1rem;
+
+      font-weight:bold;
     }
 
     .movements{
+
       display:flex;
+
       flex-direction:column;
+
       gap:12px;
     }
 
     .movement{
+
       display:flex;
+
       justify-content:space-between;
+
       align-items:center;
+
       padding:14px;
+
       border-radius:18px;
+
       font-weight:bold;
-      animation: fadeIn .3s ease;
+
+      animation:fadeIn .3s ease;
     }
 
     .income{
+
       background:#e8ffe8;
+
       border-left:8px solid #45c96b;
+
       color:#229145;
     }
 
     .expense{
+
       background:#fff0f0;
+
       border-left:8px solid #ff5c7a;
+
       color:#cc2950;
     }
 
-    .month{
-      font-size:1rem;
-    }
+    .delete-btn{
 
-    .amount{
-      font-size:1.1rem;
-    }
+  border:none;
+
+  background:white;
+
+  width:30px;
+
+  height:30px;
+
+  border-radius:50%;
+
+  cursor:pointer;
+
+  font-size:14px;
+
+  transition:.2s;
+}
+
+.delete-btn:hover{
+
+  transform:scale(1.1);
+}
+
+.movement-right{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+}
 
     .btn-more{
-      margin-top:18px;
+
       width:100%;
+
+      margin-top:14px;
+
       border:none;
-      padding:14px;
+
       border-radius:18px;
-      background:#ff9cc7;
-      color:white;
+
+      padding:14px;
+
       font-size:1rem;
+
       font-weight:bold;
+
       cursor:pointer;
+
       transition:.2s;
+
+      background:#ff9cc7;
+
+      color:white;
     }
 
     .btn-more:hover{
+
       transform:scale(1.02);
-      background:#ff7fb6;
     }
 
     .empty{
+
       text-align:center;
+
       color:#d66a97;
+
       margin-top:10px;
     }
 
+    .mini-export{
+
+      position:fixed;
+
+      bottom:10px;
+
+      right:12px;
+
+      width:32px;
+
+      height:32px;
+
+      display:flex;
+
+      align-items:center;
+
+      justify-content:center;
+
+      border-radius:50%;
+
+      background:rgba(255,255,255,0.55);
+
+      backdrop-filter:blur(4px);
+
+      font-size:14px;
+
+      cursor:pointer;
+
+      opacity:.25;
+
+      transition:.2s;
+
+      user-select:none;
+    }
+
+    .mini-export:hover{
+
+      opacity:.9;
+
+      transform:scale(1.08);
+    }
+
     @keyframes fadeIn{
+
       from{
         opacity:0;
         transform:translateY(10px);
       }
+
       to{
         opacity:1;
         transform:translateY(0);
       }
+
     }
 
     @media(max-width:480px){
+
       .total{
         font-size:2.4rem;
       }
@@ -151,150 +387,567 @@
       h1{
         font-size:1.6rem;
       }
+
     }
+
   </style>
+
 </head>
 
 <body>
 
   <div class="container">
+
     <div class="card">
 
-      <h1>Nikolai Wallet ✨</h1>
+      <h1>
+        Nikolai Wallet ✨
+      </h1>
 
-      <div class="total" id="total">$0.00</div>
+      <div
+        class="month-indicator"
+        id="monthIndicator"
+      ></div>
 
-      <div class="filters">
-        <select id="monthFilter"></select>
+      <div
+        class="total"
+        id="total"
+      >
+        $0.00
       </div>
 
-      <div class="movements" id="movements"></div>
+      <!-- FORMULARIO -->
+      <div class="form-box">
 
-      <button class="btn-more" id="btnMore">
+        <input
+          type="text"
+          id="amountInput"
+          placeholder="Ejemplo: -120.50 o 500"
+        />
+
+        <button
+          class="btn-add"
+          id="btnAdd"
+          disabled
+        >
+          Agregar movimiento
+        </button>
+
+      </div>
+
+      <!-- FILTRO -->
+      <div class="filters">
+
+        <select id="monthFilter">
+
+          <option value="Todos">
+            Todos los meses
+          </option>
+
+        </select>
+
+      </div>
+
+      <!-- MOVIMIENTOS -->
+      <div
+        class="movements"
+        id="movements"
+      ></div>
+
+      <!-- VER MAS -->
+      <button
+        class="btn-more"
+        id="btnMore"
+      >
         Ver más ✨
       </button>
 
     </div>
+
   </div>
-<script src="movimientos.js"></script>
+
+  <!-- EXPORTAR JSON -->
+  <div
+    class="mini-export"
+    id="exportData"
+    title="Exportar JSON"
+  >
+    💾
+  </div>
+
   <script>
-    const totalElement = document.getElementById("total");
-    const movementsElement = document.getElementById("movements");
-    const monthFilter = document.getElementById("monthFilter");
-    const btnMore = document.getElementById("btnMore");
+
+    /*
+      ============================================
+      MES ACTUAL AUTOMATICO
+      ============================================
+    */
+
+    const currentMonth =
+      new Date().toLocaleString(
+        "es-MX",
+        { month:"long" }
+      );
+
+    const currentMonthCapitalized =
+      currentMonth.charAt(0).toUpperCase() +
+      currentMonth.slice(1);
+
+    /*
+      ============================================
+      LOCAL STORAGE
+      ============================================
+    */
+
+    const STORAGE_KEY =
+      "kaz_movimientos";
+
+    const initialData = [
+
+    ];
+
+    let movimientos =
+      JSON.parse(
+        localStorage.getItem(STORAGE_KEY)
+      ) || initialData;
+
+    function saveMovements(){
+
+      localStorage.setItem(
+        STORAGE_KEY,
+        JSON.stringify(movimientos)
+      );
+
+    }
+
+    /*
+      ============================================
+      ELEMENTOS
+      ============================================
+    */
+
+    const totalElement =
+      document.getElementById("total");
+
+    const movementsElement =
+      document.getElementById("movements");
+
+    const monthFilter =
+      document.getElementById("monthFilter");
+
+    const btnMore =
+      document.getElementById("btnMore");
+
+    const amountInput =
+      document.getElementById("amountInput");
+
+    const btnAdd =
+      document.getElementById("btnAdd");
+
+    const exportData =
+      document.getElementById("exportData");
+
+    const monthIndicator =
+      document.getElementById("monthIndicator");
 
     let showingAll = false;
 
-    // TOTAL GENERAL
-    const totalGeneral = movimientos.reduce((acc, mov) => {
-      return acc + mov.cantidad;
-    }, 0);
+    /*
+      ============================================
+      MOSTRAR MES ACTUAL
+      ============================================
+    */
 
-    totalElement.textContent =
-      `$${totalGeneral.toFixed(2)}`;
 
-    // MESES UNICOS
-    const meses = [...new Set(movimientos.map(m => m.mes))];
+    /*
+      ============================================
+      VALIDAR INPUT
+      ============================================
+    */
 
-    monthFilter.innerHTML =
-      `<option value="Todos">Todos los meses</option>`;
+    amountInput.addEventListener("input", () => {
 
-    meses.forEach(mes => {
-      monthFilter.innerHTML += `
-        <option value="${mes}">
-          ${mes}
-        </option>
-      `;
+      const value =
+        amountInput.value.trim();
+
+      const regex =
+        /^-?\d+(\.\d+)?$/;
+
+      btnAdd.disabled =
+        !regex.test(value);
+
     });
 
-    // RENDER MOVIMIENTOS
+    /*
+      ============================================
+      TOTAL
+      ============================================
+    */
+
+    function renderTotal(){
+
+      const total =
+        movimientos.reduce(
+          (acc, mov) =>
+            acc + mov.cantidad,
+          0
+        );
+
+      totalElement.textContent =
+        `$${total.toFixed(2)}`;
+
+    }
+
+    /*
+      ============================================
+      FILTROS
+      ============================================
+    */
+
+    function renderFilters(){
+
+      const meses = [
+
+        ...new Set(
+          movimientos.map(m => m.mes)
+        )
+
+      ];
+
+      const currentSelected =
+        monthFilter.value;
+
+      monthFilter.innerHTML =
+        `<option value="Todos">
+          Todos los meses
+        </option>`;
+
+      meses.forEach(mes => {
+
+        monthFilter.innerHTML += `
+          <option value="${mes}">
+            ${mes}
+          </option>
+        `;
+
+      });
+
+      if(meses.includes(currentSelected)){
+
+        monthFilter.value =
+          currentSelected;
+
+      }
+
+
+
+    }
+
+    /*
+      ============================================
+      MOVIMIENTOS
+      ============================================
+    */
+
     function renderMovements(){
 
-      const selectedMonth = monthFilter.value;
+      let filtered =
+        [...movimientos].reverse();
 
-      let filtered = [...movimientos].reverse();
+      if(
+        monthFilter.value !== "Todos"
+      ){
 
-      if(selectedMonth !== "Todos"){
-        filtered = filtered.filter(
-          mov => mov.mes === selectedMonth
-        );
+        filtered =
+          filtered.filter(
+            mov =>
+              mov.mes ===
+              monthFilter.value
+          );
+
       }
 
       movementsElement.innerHTML = "";
 
       if(filtered.length === 0){
+
         movementsElement.innerHTML = `
           <div class="empty">
             No hay movimientos ✨
           </div>
         `;
 
-        btnMore.style.display = "none";
+        btnMore.style.display =
+          "none";
+
         return;
       }
 
-      const visibleMovements = showingAll
+      const visible =
+        showingAll
         ? filtered
-        : filtered.slice(0, 8);
+        : filtered.slice(0,8);
 
-      visibleMovements.forEach(mov => {
+      visible.forEach(mov => {
 
-        const isIncome = mov.cantidad >= 0;
+        const isIncome =
+          mov.cantidad >= 0;
 
-        const div = document.createElement("div");
+        const div =
+          document.createElement("div");
 
         div.className =
-          `movement ${isIncome ? "income" : "expense"}`;
+          `movement ${
+            isIncome
+            ? "income"
+            : "expense"
+          }`;
 
-        div.innerHTML = `
-          <div class="month">
-            ${mov.mes}
-          </div>
+       div.innerHTML = `
 
-          <div class="amount">
-            ${isIncome ? "+" : "-"}
-            $${Math.abs(mov.cantidad).toFixed(2)}
-          </div>
-        `;
+  <div>
+    ${mov.mes}
+  </div>
+
+  <div class="movement-right">
+
+    <div>
+      ${isIncome ? "+" : "-"}
+      $${Math.abs(
+        mov.cantidad
+      ).toFixed(2)}
+    </div>
+
+    <button
+      class="delete-btn"
+      onclick="deleteMovement(${movimientos.indexOf(mov)})"
+    >
+      🎀
+    </button>
+
+  </div>
+
+`;
 
         movementsElement.appendChild(div);
+
       });
 
-      // BOTON VER MAS
       if(filtered.length <= 8){
-        btnMore.style.display = "none";
+
+        btnMore.style.display =
+          "none";
+
       }else{
-        btnMore.style.display = "block";
-        btnMore.textContent = showingAll
+
+        btnMore.style.display =
+          "block";
+
+        btnMore.textContent =
+          showingAll
           ? "Ver menos ✨"
           : "Ver más ✨";
+
       }
+
     }
 
-    monthFilter.addEventListener("change", () => {
-      showingAll = false;
+    /*
+      ============================================
+      AGREGAR MOVIMIENTO
+      ============================================
+    */
+
+    btnAdd.addEventListener("click", () => {
+
+      const amountRaw =
+        amountInput.value.trim();
+
+      const regex =
+        /^-?\d+(\.\d+)?$/;
+
+      if(!regex.test(amountRaw)){
+
+        alert(
+          "Cantidad inválida ✨"
+        );
+
+        return;
+      }
+
+      const cantidad =
+        parseFloat(amountRaw);
+
+      const today =
+        new Date()
+          .toISOString()
+          .split("T")[0];
+
+      const mes =
+        new Date().toLocaleString(
+          "es-MX",
+          { month:"long" }
+        );
+
+      const mesCapitalized =
+        mes.charAt(0).toUpperCase() +
+        mes.slice(1);
+
+      movimientos.push({
+
+        mes: mesCapitalized,
+
+        cantidad,
+
+        fecha: today
+
+      });
+
+      saveMovements();
+
+      renderAll();
+
+      
+
+      amountInput.value = "";
+
+      btnAdd.disabled = true;
+
+    });
+
+    /*
+      ============================================
+      VER MAS
+      ============================================
+    */
+
+    btnMore.addEventListener(
+      "click",
+      () => {
+
+        showingAll =
+          !showingAll;
+
+        renderMovements();
+
+      }
+    );
+
+    /*
+      ============================================
+      FILTRAR
+      ============================================
+    */
+
+    monthFilter.addEventListener(
+      "change",
+      () => {
+
+        showingAll = false;
+
+        renderMovements();
+
+      }
+    );
+
+    /*
+      ============================================
+      EXPORTAR JSON
+      ============================================
+    */
+
+    exportData.addEventListener(
+      "click",
+      () => {
+
+        const dataStr =
+          JSON.stringify(
+            movimientos,
+            null,
+            2
+          );
+
+        const blob =
+          new Blob(
+            [dataStr],
+            {
+              type:
+              "application/json"
+            }
+          );
+
+        const url =
+          URL.createObjectURL(blob);
+
+        const a =
+          document.createElement("a");
+
+        a.href = url;
+
+        a.download =
+          "kaz_movimientos.json";
+
+        a.click();
+
+        URL.revokeObjectURL(url);
+
+      }
+    );
+
+    /*
+      ============================================
+      RENDER GENERAL
+      ============================================
+    */
+
+    function renderAll(){
+
+      renderTotal();
+
+      renderFilters();
+
       renderMovements();
-    });
 
-    btnMore.addEventListener("click", () => {
-      showingAll = !showingAll;
-      renderMovements();
-    });
+    }
 
-    renderMovements();
+    renderAll();
+function deleteMovement(index){
 
-  </script>
-<script>
+  const confirmDelete =
+    confirm(
+      "¿Eliminamos este movimiento?"
+    );
 
-if ("serviceWorker" in navigator) {
+  if(!confirmDelete) return;
 
-  navigator.serviceWorker.register("./sw.js")
-    .then(() => {
-      console.log("PWA lista ✨");
-    });
+  movimientos.splice(index,1);
+
+  saveMovements();
+
+  renderAll();
 
 }
+    /*
+      ============================================
+      PWA
+      ============================================
+    */
 
-</script>
+    if("serviceWorker" in navigator){
+
+      navigator.serviceWorker
+        .register("./sw.js")
+        .then(() => {
+
+          console.log(
+            "PWA lista ✨"
+          );
+
+        });
+
+    }
+
+  </script>
+
 </body>
 </html>
