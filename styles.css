@@ -570,3 +570,109 @@ body{
 .modal-actions button{
   flex:1;
 }
+
+.admin-tools{
+
+  margin-top:32px;
+
+  padding-top:20px;
+
+  border-top:1px solid #e5e7eb;
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:10px;
+
+}
+
+.admin-button{
+
+  background:#f3f4f6;
+
+  color:#4b5563;
+
+  border:none;
+
+  border-radius:12px;
+
+  padding:12px;
+
+  font-size:.9rem;
+
+  cursor:pointer;
+
+  transition:.2s;
+
+}
+
+.admin-button:hover{
+
+  background:#e5e7eb;
+
+}
+
+.admin-button.danger{
+
+  background:#fef2f2;
+
+  color:#dc2626;
+
+}
+
+.admin-button.danger:hover{
+
+  background:#fee2e2;
+
+}
+
+
+
+.admin-section{
+
+  margin-top:32px;
+
+}
+
+.admin-toggle{
+
+  width:100%;
+
+  border:none;
+
+  background:transparent;
+
+  color:#6b7280;
+
+  font-size:.85rem;
+
+  cursor:pointer;
+
+  padding:10px;
+
+}
+
+.admin-tools{
+
+  overflow:hidden;
+
+  max-height:300px;
+
+  opacity:1;
+
+  transition:
+    max-height .3s ease,
+    opacity .3s ease;
+
+}
+
+.admin-tools.hidden{
+
+  max-height:0;
+
+  opacity:0;
+
+  pointer-events:none;
+
+}
