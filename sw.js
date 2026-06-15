@@ -1,4 +1,4 @@
-const CACHE_NAME = "kaz-money-v4";
+const CACHE_NAME = "kaz-money-v5";
 
 const urlsToCache = [
   "./",
