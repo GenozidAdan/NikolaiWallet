@@ -3,6 +3,7 @@
 <head>
 
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -34,228 +35,384 @@
           Escalibur App
         </h1>
 
-     
       </div>
 
-    <a
-  href="dinero.html"
-  class="menu-button"
->
-  Consultar Dinero
-</a>
+      <a
+        href="dinero.html"
+        class="menu-button"
+      >
+        Consultar Dinero
+      </a>
 
-<a
-  href="reservas.html"
-  class="menu-button"
->
-  Reserva Trabajos
-</a>
-<div class="admin-section">
+      <a
+        href="reservas.html"
+        class="menu-button"
+      >
+        Reserva Trabajos
+      </a>
 
-  <button
-    id="toggleAdminTools"
-    class="admin-toggle"
-  >
-    Herramientas avanzadas
-  </button>
+      <div class="admin-section">
 
-  <div
-    id="adminTools"
-    class="admin-tools"
-  >
+        <button
+          id="toggleAdminTools"
+          class="admin-toggle"
+        >
+          Herramientas avanzadas
+        </button>
 
-    <button
-      id="btnExportJson"
-      class="admin-button"
-    >
-      Descargar Respaldo
-    </button>
+        <div
+          id="adminTools"
+          class="admin-tools"
+        >
 
-    <button
-      id="btnDeleteData"
-      class="admin-button danger"
-    >
-      Borrar Datos
-    </button>
+          <button
+            id="btnExportBackup"
+            class="admin-button"
+          >
+            Descargar Respaldo
+          </button>
 
-  </div>
+    
+          <button
+            id="btnDeleteData"
+            class="admin-button danger"
+          >
+            Borrar Datos
+          </button>
 
-</div>
+        </div>
+
+      </div>
 
     </section>
 
   </main>
 
   <script src="app.js"></script>
-<script>
 
-const STORAGE_KEY =
-  "kaz_movimientos";
+  <script>
 
-/*
-====================================
-EXPORTAR JSON
-====================================
-*/
+  /*
+  ====================================
+  STORAGE KEYS
+  ====================================
+  */
 
-document
-  .getElementById(
-    "btnExportJson"
-  )
-  .addEventListener(
-    "click",
-    () => {
+  const MONEY_KEY =
+    "kaz_movimientos";
 
-      const movimientos =
-        JSON.parse(
-          localStorage.getItem(
-            STORAGE_KEY
-          )
-        ) || [];
+  const RESERVAS_KEY =
+    "kaz_reservas";
 
-      const json =
-        JSON.stringify(
-          movimientos,
-          null,
-          2
-        );
+  /*
+  ====================================
+  DESCARGAR RESPALDO COMPLETO
+  ====================================
+  */
 
-      const blob =
-        new Blob(
-          [json],
-          {
-            type:
+  document
+    .getElementById(
+      "btnExportBackup"
+    )
+    .addEventListener(
+      "click",
+      () => {
+
+        const respaldo = {
+
+          fecha:
+            new Date()
+              .toISOString(),
+
+          movimientos:
+            JSON.parse(
+              localStorage.getItem(
+                MONEY_KEY
+              )
+            ) || [],
+
+          reservas:
+            JSON.parse(
+              localStorage.getItem(
+                RESERVAS_KEY
+              )
+            ) || []
+
+        };
+
+        const json =
+          JSON.stringify(
+            respaldo,
+            null,
+            2
+          );
+
+        const blob =
+          new Blob(
+            [json],
+            {
+              type:
               "application/json"
-          }
+            }
+          );
+
+        const url =
+          URL.createObjectURL(
+            blob
+          );
+
+        const a =
+          document.createElement(
+            "a"
+          );
+
+        a.href = url;
+
+        a.download =
+          "escalibur_respaldo.json";
+
+        a.click();
+
+        URL.revokeObjectURL(
+          url
         );
-
-      const url =
-        URL.createObjectURL(
-          blob
-        );
-
-      const a =
-        document.createElement(
-          "a"
-        );
-
-      a.href = url;
-
-      a.download =
-        "respaldo_dinero.json";
-
-      a.click();
-
-      URL.revokeObjectURL(
-        url
-      );
-
-    }
-  );
-
-/*
-====================================
-BORRAR LOCAL STORAGE
-====================================
-*/
-
-document
-  .getElementById(
-    "btnDeleteData"
-  )
-  .addEventListener(
-    "click",
-    () => {
-
-      const confirmDelete =
-        confirm(
-          "¿Deseas eliminar todos los movimientos guardados?"
-        );
-
-      if(
-        !confirmDelete
-      ){
-
-        return;
 
       }
+    );
 
-      localStorage.removeItem(
-        STORAGE_KEY
-      );
+  /*
+  ====================================
+  ESTADO FINANCIERO
+  ====================================
+  */
 
-      alert(
-        "Datos eliminados correctamente."
-      );
+  document
+    .getElementById(
+      "btnFinancialReport"
+    )
+    .addEventListener(
+      "click",
+      () => {
 
-    }
-  );
+        const movimientos =
+          JSON.parse(
+            localStorage.getItem(
+              MONEY_KEY
+            )
+          ) || [];
 
-/*
-====================================
-MOSTRAR / OCULTAR
-====================================
-*/
+        const reservas =
+          JSON.parse(
+            localStorage.getItem(
+              RESERVAS_KEY
+            )
+          ) || [];
 
-const ADMIN_STORAGE_KEY =
-  "kaz_admin_tools_hidden";
+        const saldoActual =
+          movimientos.reduce(
+            (acc,mov) =>
+              acc +
+              Number(
+                mov.cantidad || 0
+              ),
+            0
+          );
 
-const toggleAdminTools =
-  document.getElementById(
-    "toggleAdminTools"
-  );
+        const totalReservado =
+          reservas.reduce(
+            (acc,reserva) =>
+              acc +
+              Number(
+                reserva.precio || 0
+              ),
+            0
+          );
 
-const adminTools =
-  document.getElementById(
-    "adminTools"
-  );
+        const totalRecibido =
+          reservas.reduce(
+            (acc,reserva) =>
+              acc +
+              Number(
+                reserva.recibido || 0
+              ),
+            0
+          );
 
-const hidden =
-  localStorage.getItem(
-    ADMIN_STORAGE_KEY
-  ) === "true";
+        const pendiente =
+          totalReservado -
+          totalRecibido;
 
-if(hidden){
+        const reporte =
+`ESTADO FINANCIERO ESCALIBUR
 
-  adminTools.classList.add(
-    "hidden"
-  );
+Fecha:
+${new Date().toLocaleDateString("es-MX")}
 
-  toggleAdminTools.textContent =
-    "Mostrar herramientas avanzadas";
+--------------------------------
 
-}else{
+Saldo actual:
+$${saldoActual.toFixed(2)}
 
-  toggleAdminTools.textContent =
-    "Ocultar herramientas avanzadas";
+--------------------------------
 
-}
+Reservas registradas:
+${reservas.length}
 
-toggleAdminTools.addEventListener(
-  "click",
-  () => {
+Valor total de trabajos:
+$${totalReservado.toFixed(2)}
 
-    adminTools.classList.toggle(
+Dinero recibido:
+$${totalRecibido.toFixed(2)}
+
+Pendiente por cobrar:
+$${pendiente.toFixed(2)}
+
+--------------------------------
+
+Movimientos registrados:
+${movimientos.length}
+`;
+
+        const blob =
+          new Blob(
+            [reporte],
+            {
+              type:
+              "text/plain"
+            }
+          );
+
+        const url =
+          URL.createObjectURL(
+            blob
+          );
+
+        const a =
+          document.createElement(
+            "a"
+          );
+
+        a.href = url;
+
+        a.download =
+          "estado_financiero.txt";
+
+        a.click();
+
+        URL.revokeObjectURL(
+          url
+        );
+
+      }
+    );
+
+  /*
+  ====================================
+  BORRAR DATOS
+  ====================================
+  */
+
+  document
+    .getElementById(
+      "btnDeleteData"
+    )
+    .addEventListener(
+      "click",
+      () => {
+
+        const confirmDelete =
+          confirm(
+            "¿Eliminar todos los datos de dinero y reservas?"
+          );
+
+        if(
+          !confirmDelete
+        ){
+          return;
+        }
+
+        localStorage.removeItem(
+          MONEY_KEY
+        );
+
+        localStorage.removeItem(
+          RESERVAS_KEY
+        );
+
+        alert(
+          "Datos eliminados correctamente."
+        );
+
+      }
+    );
+
+  /*
+  ====================================
+  PANEL OCULTABLE
+  ====================================
+  */
+
+  const ADMIN_STORAGE_KEY =
+    "kaz_admin_tools_hidden";
+
+  const toggleAdminTools =
+    document.getElementById(
+      "toggleAdminTools"
+    );
+
+  const adminTools =
+    document.getElementById(
+      "adminTools"
+    );
+
+  const hidden =
+    localStorage.getItem(
+      ADMIN_STORAGE_KEY
+    ) === "true";
+
+  if(hidden){
+
+    adminTools.classList.add(
       "hidden"
     );
 
-    const isHidden =
-      adminTools.classList.contains(
+    toggleAdminTools.textContent =
+      "Mostrar herramientas avanzadas";
+
+  }else{
+
+    toggleAdminTools.textContent =
+      "Ocultar herramientas avanzadas";
+
+  }
+
+  toggleAdminTools.addEventListener(
+    "click",
+    () => {
+
+      adminTools.classList.toggle(
         "hidden"
       );
 
-    localStorage.setItem(
-      ADMIN_STORAGE_KEY,
-      isHidden
-    );
+      const isHidden =
+        adminTools.classList.contains(
+          "hidden"
+        );
 
-    toggleAdminTools.textContent =
-      isHidden
-      ? "Mostrar herramientas avanzadas"
-      : "Ocultar herramientas avanzadas";
+      localStorage.setItem(
+        ADMIN_STORAGE_KEY,
+        isHidden
+      );
 
-  }
-);
-</script>
+      toggleAdminTools.textContent =
+        isHidden
+        ? "Mostrar herramientas avanzadas"
+        : "Ocultar herramientas avanzadas";
+
+    }
+  );
+
+  </script>
+
 </body>
 </html>
