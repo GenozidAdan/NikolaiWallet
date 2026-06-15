@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0"
+>
+
+<title>Control Financiero</title>
+
+<link
+  rel="stylesheet"
+  href="styles.css"
+>
+
+</head>
+
+<body>
+
+<div class="page">
+
+  <a
+    href="index.html"
+    class="back-button"
+  >
+    ← Volver
+  </a>
+
+  <div class="card">
+
+    <h1 class="page-title">
+      Control Financiero
+    </h1>
+
+    <div
+      id="monthIndicator"
+      class="month-indicator"
+    ></div>
+
+    <div class="balance-card">
+
+      <div class="balance-label">
+        Saldo Actual
+      </div>
+
+      <div
+        id="total"
+        class="balance-value"
+      >
+        $0.00
+      </div>
+
+      <div class="mini-balances">
+
+        <div>
+
+          <span>
+            Digital
+          </span>
+
+          <strong id="digitalBalance">
+            $0.00
+          </strong>
+
+        </div>
+
+        <div>
+
+          <span>
+            Físico
+          </span>
+
+          <strong id="physicalBalance">
+            $0.00
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="form-box">
+
+      <button
+        id="btnOpenModal"
+        class="primary-btn"
+      >
+        Registrar Movimiento
+      </button>
+
+    </div>
+
+    <div class="section-title">
+      Filtrar por Mes
+    </div>
+
+    <select
+      id="monthFilter"
+      class="filter"
+    >
+
+      <option value="Todos">
+        Todos los meses
+      </option>
+
+    </select>
+
+    <div
+      id="movements"
+      class="movements"
+    ></div>
+
+    <button
+      id="btnMore"
+      class="primary-btn"
+    >
+      Ver más
+    </button>
+
+  </div>
+
+</div>
+<!-- 
+<div
+  id="exportData"
+  class="export-btn"
+>
+  Exportar
+</div>-->
+
+<!-- MODAL -->
+
+<div
+  id="movementModal"
+  class="modal-overlay"
+>
+
+  <div class="modal-card">
+
+    <h2>
+      Nuevo Movimiento
+    </h2>
+
+    <div
+      id="availableBalance"
+      class="available-balance"
+    >
+      Saldo disponible: $0.00
+    </div>
+
+    <div
+      id="errorMessage"
+      class="error-message"
+    ></div>
+
+    <input
+      type="text"
+      id="amountInput"
+      class="input"
+      placeholder="+500 o -120"
+    >
+
+    <div class="type-selector">
+
+      <label>
+
+        <input
+          type="radio"
+          name="walletType"
+          value="digital"
+          checked
+        >
+
+        Digital
+
+      </label>
+
+      <label>
+
+        <input
+          type="radio"
+          name="walletType"
+          value="fisico"
+        >
+
+        Físico
+
+      </label>
+
+    </div>
+
+    <button
+      id="toggleDescription"
+      class="link-btn"
+      type="button"
+    >
+      + Agregar descripción
+    </button>
+
+    <textarea
+      id="descriptionInput"
+      maxlength="80"
+      class="description-box"
+      placeholder="Máximo 80 caracteres"
+    ></textarea>
+
+    <div class="modal-actions">
+
+      <button
+        id="btnCancel"
+        class="secondary-btn"
+      >
+        Cancelar
+      </button>
+
+      <button
+        id="btnAdd"
+        class="primary-btn"
+        disabled
+      >
+        Registrar
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+
+<script src="dinero.js"></script>
+
+</body>
+</html>
