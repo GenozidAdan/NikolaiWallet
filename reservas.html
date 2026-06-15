@@ -2,48 +2,299 @@
 <html lang="es">
 <head>
 
-<meta charset="UTF-8">
+  <meta charset="UTF-8">
 
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
->
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
 
-<title>Reserva Trabajos</title>
+  <title>
+    Reserva de Trabajos
+  </title>
 
-<link
-  rel="stylesheet"
-  href="styles.css"
->
+  <link
+    rel="stylesheet"
+    href="reservas.css"
+  >
 
 </head>
 
 <body>
 
-<div class="page">
+  <div class="page">
 
-  <a
-    href="index.html"
-    class="back-button"
-  >
-    Volver
-  </a>
+    <a
+      href="index.html"
+      class="back-button"
+    >
+      ← Volver
+    </a>
 
-  <div class="card">
+    <div class="card">
 
-    <h1>
-      Reserva Trabajos
-    </h1>
+      <h1 class="page-title">
+        Reserva de Trabajos
+      </h1>
 
-    <p>
-      Próximamente.
-    </p>
+      <div class="stats-row">
+
+        <div class="stat-box">
+
+          <span>
+            Reservas
+          </span>
+
+          <strong id="totalReservas">
+            0
+          </strong>
+
+        </div>
+
+        <div class="stat-box">
+
+          <span>
+            Por liquidar
+          </span>
+
+          <strong id="totalPendientes">
+            0
+          </strong>
+
+        </div>
+
+      </div>
+
+      <button
+        id="btnOpenModal"
+        class="primary-btn"
+      >
+        Nueva Reserva
+      </button>
+
+      <div class="filter-section">
+
+        <label>
+          Filtrar por estado
+        </label>
+
+        <select
+          id="statusFilter"
+          class="filter"
+        >
+
+          <option value="Todos">
+            Todos
+          </option>
+
+          <option value="En proceso">
+            En proceso
+          </option>
+
+          <option value="Completado">
+            Completado
+          </option>
+
+          <option value="Enviado">
+            Enviado
+          </option>
+
+          <option value="Entregado">
+            Entregado
+          </option>
+
+        </select>
+
+      </div>
+
+      <div
+        id="reservasList"
+        class="reservas-list"
+      ></div>
+
+      <button
+        id="btnMore"
+        class="secondary-btn"
+      >
+        Ver más
+      </button>
+
+    </div>
 
   </div>
 
-</div>
+  <!-- MODAL NUEVA RESERVA -->
 
-<script src="reservas.js"></script>
+  <div
+    id="reservationModal"
+    class="modal-overlay"
+  >
+
+    <div class="modal-card">
+
+      <h2>
+        Nueva Reserva
+      </h2>
+
+      <input
+        type="text"
+        id="clienteInput"
+        class="input"
+        maxlength="60"
+        placeholder="Nombre del cliente"
+      >
+
+      <input
+        type="text"
+        id="tituloInput"
+        class="input"
+        maxlength="80"
+        placeholder="Título del trabajo"
+      >
+
+      <textarea
+        id="descripcionInput"
+        class="textarea"
+        maxlength="300"
+        placeholder="Descripción"
+      ></textarea>
+
+      <input
+        type="number"
+        id="precioInput"
+        class="input"
+        min="1"
+        placeholder="Precio total"
+      >
+
+      <input
+        type="number"
+        id="recibidoInput"
+        class="input"
+        min="0"
+        placeholder="Dinero recibido"
+      >
+
+      <label class="date-label">
+        Fecha compromiso
+      </label>
+
+      <input
+        type="date"
+        id="fechaInput"
+        class="input"
+      >
+
+      <div
+        id="formError"
+        class="error-message"
+      ></div>
+
+      <div class="modal-actions">
+
+        <button
+          id="btnCancel"
+          class="secondary-btn"
+        >
+          Cancelar
+        </button>
+
+        <button
+          id="btnSave"
+          class="primary-btn"
+          disabled
+        >
+          Guardar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL DETALLE -->
+
+  <div
+    id="detailsModal"
+    class="modal-overlay"
+  >
+
+    <div class="modal-card details-card">
+
+      <h2>
+        Detalle de Reserva
+      </h2>
+
+      <div
+        id="detailsContent"
+      ></div>
+
+      <div class="details-section">
+
+        <h3>
+          Estado
+        </h3>
+
+        <div
+          id="statusActions"
+          class="status-actions"
+        ></div>
+
+      </div>
+
+     <div
+  id="abonoSection"
+  class="details-section"
+>
+
+  <h3>
+    Registrar Abono
+  </h3>
+
+        <div
+          id="pendingAmount"
+          class="pending-amount"
+        ></div>
+
+        <input
+          type="number"
+          id="abonoInput"
+          class="input"
+          min="1"
+          placeholder="Cantidad recibida"
+        >
+
+        <div
+          id="abonoError"
+          class="error-message"
+        ></div>
+
+        <button
+          id="btnAddAbono"
+          class="primary-btn"
+        >
+          Registrar Abono
+        </button>
+
+      </div>
+
+      <div class="modal-actions">
+
+        <button
+          id="btnCloseDetails"
+          class="secondary-btn"
+        >
+          Cerrar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="reservas.js"></script>
 
 </body>
 </html>
