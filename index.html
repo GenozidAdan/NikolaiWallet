@@ -37,25 +37,225 @@
      
       </div>
 
-      <a
-        href="dinero.html"
-        class="menu-button"
-      >
-        Consultar Dinero
-      </a>
+    <a
+  href="dinero.html"
+  class="menu-button"
+>
+  Consultar Dinero
+</a>
 
-      <a
-        href="reservas.html"
-        class="menu-button"
-      >
-        Reserva Trabajos
-      </a>
+<a
+  href="reservas.html"
+  class="menu-button"
+>
+  Reserva Trabajos
+</a>
+<div class="admin-section">
+
+  <button
+    id="toggleAdminTools"
+    class="admin-toggle"
+  >
+    Herramientas avanzadas
+  </button>
+
+  <div
+    id="adminTools"
+    class="admin-tools"
+  >
+
+    <button
+      id="btnExportJson"
+      class="admin-button"
+    >
+      Descargar Respaldo
+    </button>
+
+    <button
+      id="btnDeleteData"
+      class="admin-button danger"
+    >
+      Borrar Datos
+    </button>
+
+  </div>
+
+</div>
 
     </section>
 
   </main>
 
   <script src="app.js"></script>
+<script>
 
+const STORAGE_KEY =
+  "kaz_movimientos";
+
+/*
+====================================
+EXPORTAR JSON
+====================================
+*/
+
+document
+  .getElementById(
+    "btnExportJson"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      const movimientos =
+        JSON.parse(
+          localStorage.getItem(
+            STORAGE_KEY
+          )
+        ) || [];
+
+      const json =
+        JSON.stringify(
+          movimientos,
+          null,
+          2
+        );
+
+      const blob =
+        new Blob(
+          [json],
+          {
+            type:
+              "application/json"
+          }
+        );
+
+      const url =
+        URL.createObjectURL(
+          blob
+        );
+
+      const a =
+        document.createElement(
+          "a"
+        );
+
+      a.href = url;
+
+      a.download =
+        "respaldo_dinero.json";
+
+      a.click();
+
+      URL.revokeObjectURL(
+        url
+      );
+
+    }
+  );
+
+/*
+====================================
+BORRAR LOCAL STORAGE
+====================================
+*/
+
+document
+  .getElementById(
+    "btnDeleteData"
+  )
+  .addEventListener(
+    "click",
+    () => {
+
+      const confirmDelete =
+        confirm(
+          "¿Deseas eliminar todos los movimientos guardados?"
+        );
+
+      if(
+        !confirmDelete
+      ){
+
+        return;
+
+      }
+
+      localStorage.removeItem(
+        STORAGE_KEY
+      );
+
+      alert(
+        "Datos eliminados correctamente."
+      );
+
+    }
+  );
+
+/*
+====================================
+MOSTRAR / OCULTAR
+====================================
+*/
+
+const ADMIN_STORAGE_KEY =
+  "kaz_admin_tools_hidden";
+
+const toggleAdminTools =
+  document.getElementById(
+    "toggleAdminTools"
+  );
+
+const adminTools =
+  document.getElementById(
+    "adminTools"
+  );
+
+const hidden =
+  localStorage.getItem(
+    ADMIN_STORAGE_KEY
+  ) === "true";
+
+if(hidden){
+
+  adminTools.classList.add(
+    "hidden"
+  );
+
+  toggleAdminTools.textContent =
+    "Mostrar herramientas avanzadas";
+
+}else{
+
+  toggleAdminTools.textContent =
+    "Ocultar herramientas avanzadas";
+
+}
+
+toggleAdminTools.addEventListener(
+  "click",
+  () => {
+
+    adminTools.classList.toggle(
+      "hidden"
+    );
+
+    const isHidden =
+      adminTools.classList.contains(
+        "hidden"
+      );
+
+    localStorage.setItem(
+      ADMIN_STORAGE_KEY,
+      isHidden
+    );
+
+    toggleAdminTools.textContent =
+      isHidden
+      ? "Mostrar herramientas avanzadas"
+      : "Ocultar herramientas avanzadas";
+
+  }
+);
+</script>
 </body>
 </html>
