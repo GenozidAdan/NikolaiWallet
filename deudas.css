@@ -1,0 +1,637 @@
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+}
+
+body{
+
+  font-family:
+    "Segoe UI",
+    sans-serif;
+
+  background:
+    linear-gradient(
+      180deg,
+      #fff4fa 0%,
+      #ffeef7 100%
+    );
+
+  min-height:100vh;
+
+  color:#4b4453;
+}
+
+.page{
+  max-width:700px;
+  margin:auto;
+  padding:16px;
+}
+
+/*
+========================
+VOLVER
+========================
+*/
+
+.back-button{
+
+  display:inline-block;
+
+  margin-bottom:16px;
+
+  text-decoration:none;
+
+  color:#ff69b4;
+
+  font-weight:700;
+
+  transition:.25s;
+}
+
+.back-button:hover{
+  transform:translateX(-3px);
+}
+
+/*
+========================
+CARD PRINCIPAL
+========================
+*/
+
+.card{
+
+  background:white;
+
+  border-radius:28px;
+
+  padding:20px;
+
+  box-shadow:
+    0 10px 35px
+    rgba(255,105,180,.12);
+
+  border:
+    2px solid
+    #ffe0ef;
+}
+
+.page-title{
+
+  text-align:center;
+
+  color:#ff5fa2;
+
+  margin-bottom:20px;
+
+  font-size:2rem;
+
+  font-weight:800;
+
+  letter-spacing:.5px;
+}
+
+/*
+========================
+RESUMEN
+========================
+*/
+
+.summary{
+
+  display:grid;
+
+  gap:12px;
+
+  margin-bottom:20px;
+}
+
+.summary-card{
+
+  background:
+    linear-gradient(
+      135deg,
+      #fff7fb,
+      #ffeaf5
+    );
+
+  border:
+    2px solid
+    #ffd7ea;
+
+  border-radius:22px;
+
+  padding:16px;
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+}
+
+.summary-card span{
+
+  color:#a65d7d;
+
+  font-size:.9rem;
+}
+
+.summary-card strong{
+
+  color:#ff4f9a;
+
+  font-size:1.2rem;
+}
+
+/*
+========================
+BOTONES
+========================
+*/
+
+.primary-btn{
+
+  width:100%;
+
+  border:none;
+
+  border-radius:18px;
+
+  padding:14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff84c2,
+      #ff5fa2
+    );
+
+  color:white;
+
+  font-weight:700;
+
+  font-size:1rem;
+
+  cursor:pointer;
+
+  transition:.25s;
+
+  box-shadow:
+    0 6px 18px
+    rgba(255,95,162,.25);
+}
+
+.primary-btn:hover{
+
+  transform:
+    translateY(-2px)
+    scale(1.01);
+}
+
+.secondary-btn{
+
+  width:100%;
+
+  border:none;
+
+  border-radius:18px;
+
+  padding:14px;
+
+  background:#ffe6f2;
+
+  color:#ff5fa2;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+.danger-btn{
+
+  width:100%;
+
+  border:none;
+
+  border-radius:18px;
+
+  padding:14px;
+
+  background:#ff5f7a;
+
+  color:white;
+
+  font-weight:700;
+
+  cursor:pointer;
+}
+
+/*
+========================
+MESES
+========================
+*/
+
+.month-selector{
+
+  display:flex;
+
+  gap:10px;
+
+  overflow-x:auto;
+
+  margin:20px 0;
+
+  padding-bottom:8px;
+
+  scrollbar-width:none;
+}
+
+.month-selector::-webkit-scrollbar{
+  display:none;
+}
+
+.month-chip{
+
+  flex-shrink:0;
+
+  padding:10px 18px;
+
+  border-radius:999px;
+
+  background:#ffe6f2;
+
+  color:#b8668a;
+
+  font-weight:600;
+
+  cursor:pointer;
+
+  transition:.25s;
+}
+
+.month-chip.active{
+
+  background:
+    linear-gradient(
+      135deg,
+      #ff84c2,
+      #ff5fa2
+    );
+
+  color:white;
+
+  box-shadow:
+    0 6px 16px
+    rgba(255,95,162,.35);
+}
+
+/*
+========================
+DEUDAS
+========================
+*/
+
+.deudas-list{
+
+  display:flex;
+
+  flex-direction:column;
+
+  gap:12px;
+}
+
+.deuda-card{
+
+  background:white;
+
+  border-radius:22px;
+
+  padding:16px;
+
+  border:
+    2px solid
+    #ffe0ef;
+
+  cursor:pointer;
+
+  transition:.25s;
+}
+
+.deuda-card:hover{
+
+  transform:
+    translateY(-2px);
+
+  box-shadow:
+    0 10px 25px
+    rgba(255,105,180,.12);
+}
+
+.deuda-top{
+
+  display:flex;
+
+  justify-content:space-between;
+
+  align-items:center;
+
+  margin-bottom:8px;
+}
+
+.deuda-amount{
+
+  font-size:1.35rem;
+
+  font-weight:800;
+
+  color:#ff4f9a;
+}
+
+/*
+========================
+ESTADOS
+========================
+*/
+
+.status-paid{
+
+  background:#e4ffe9;
+
+  color:#1b9b50;
+
+  padding:6px 12px;
+
+  border-radius:999px;
+
+  font-size:.75rem;
+
+  font-weight:700;
+}
+
+.status-pending{
+
+  background:#fff0f6;
+
+  color:#ff4f9a;
+
+  padding:6px 12px;
+
+  border-radius:999px;
+
+  font-size:.75rem;
+
+  font-weight:700;
+}
+
+/*
+========================
+VACIO
+========================
+*/
+
+.empty{
+
+  text-align:center;
+
+  padding:30px;
+
+  color:#c48aa8;
+}
+
+/*
+========================
+MODAL
+========================
+*/
+
+.modal-overlay{
+
+  position:fixed;
+
+  inset:0;
+
+  background:
+    rgba(
+      255,
+      192,
+      203,
+      .35
+    );
+
+  backdrop-filter:
+    blur(4px);
+
+  display:none;
+
+  justify-content:center;
+
+  align-items:center;
+
+  padding:16px;
+
+  z-index:999;
+}
+
+.modal-overlay.active{
+  display:flex;
+}
+
+.modal-card{
+
+  width:100%;
+
+  max-width:430px;
+
+  background:white;
+
+  border-radius:30px;
+
+  padding:22px;
+
+  border:
+    2px solid
+    #ffe0ef;
+
+  animation:
+    modalAppear .25s ease;
+}
+
+@keyframes modalAppear{
+
+  from{
+
+    opacity:0;
+
+    transform:
+      translateY(20px)
+      scale(.96);
+  }
+
+  to{
+
+    opacity:1;
+
+    transform:
+      translateY(0)
+      scale(1);
+  }
+}
+
+.modal-card h2{
+
+  text-align:center;
+
+  color:#ff5fa2;
+
+  margin-bottom:18px;
+}
+
+/*
+========================
+INPUTS
+========================
+*/
+
+.input{
+
+  width:100%;
+
+  border:
+    2px solid
+    #ffd9eb;
+
+  border-radius:18px;
+
+  padding:14px;
+
+  margin-bottom:12px;
+
+  font-size:1rem;
+
+  outline:none;
+
+  transition:.2s;
+}
+
+.input:focus{
+
+  border-color:#ff84c2;
+
+  box-shadow:
+    0 0 0 4px
+    rgba(
+      255,
+      132,
+      194,
+      .15
+    );
+}
+
+/*
+========================
+DETALLE
+========================
+*/
+
+.detail-group{
+
+  margin-bottom:14px;
+}
+
+.detail-group label{
+
+  display:block;
+
+  margin-bottom:6px;
+
+  color:#b8668a;
+
+  font-weight:600;
+}
+
+.detail-date{
+
+  text-align:center;
+
+  margin:12px 0;
+
+  color:#c48aa8;
+
+  font-size:.85rem;
+}
+
+/*
+========================
+CHECKBOX
+========================
+*/
+
+.checkbox-row{
+
+  display:flex;
+
+  gap:10px;
+
+  align-items:center;
+
+  margin:14px 0;
+}
+
+.checkbox-row input{
+
+  width:20px;
+
+  height:20px;
+
+  accent-color:#ff5fa2;
+}
+
+/*
+========================
+ERROR
+========================
+*/
+
+.error-message{
+
+  min-height:20px;
+
+  text-align:center;
+
+  color:#ff4f6d;
+
+  font-size:.9rem;
+}
+
+/*
+========================
+ANIMACION SUAVE
+========================
+*/
+
+.deuda-card,
+.month-chip,
+.primary-btn,
+.secondary-btn{
+
+  transition:
+    all .25s ease;
+}
+
+/*
+========================
+TABLET
+========================
+*/
+
+@media(min-width:768px){
+
+  .summary{
+
+    grid-template-columns:
+      repeat(2,1fr);
+  }
+
+}
