@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Control de Deudas
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="deudas.css"
+  >
+
+</head>
+
+<body>
+
+  <div class="page">
+
+    <a
+      href="index.html"
+      class="back-button"
+    >
+      ← Volver
+    </a>
+
+    <div class="card">
+
+      <h1 class="page-title">
+        Control de Deudas
+      </h1>
+
+      <!-- RESUMEN -->
+
+      <div class="summary">
+
+        <div class="summary-card">
+
+          <span>
+            Total del Mes
+          </span>
+
+          <strong
+            id="monthTotal"
+          >
+            $0.00
+          </strong>
+
+        </div>
+
+        <div class="summary-card">
+
+          <span>
+            Pendiente por Apartar
+          </span>
+
+          <strong
+            id="monthPending"
+          >
+            $0.00
+          </strong>
+
+        </div>
+
+      </div>
+
+      <!-- NUEVA DEUDA -->
+
+      <button
+        id="btnOpenModal"
+        class="primary-btn"
+      >
+        Nueva Deuda
+      </button>
+
+      <!-- MESES -->
+
+      <div
+        class="month-selector"
+        id="monthSelector"
+      >
+
+        <div class="month-chip" data-month="Enero">
+          Enero
+        </div>
+
+        <div class="month-chip" data-month="Febrero">
+          Febrero
+        </div>
+
+        <div class="month-chip" data-month="Marzo">
+          Marzo
+        </div>
+
+        <div class="month-chip" data-month="Abril">
+          Abril
+        </div>
+
+        <div class="month-chip" data-month="Mayo">
+          Mayo
+        </div>
+
+        <div class="month-chip" data-month="Junio">
+          Junio
+        </div>
+
+        <div class="month-chip" data-month="Julio">
+          Julio
+        </div>
+
+        <div class="month-chip" data-month="Agosto">
+          Agosto
+        </div>
+
+        <div class="month-chip" data-month="Septiembre">
+          Septiembre
+        </div>
+
+        <div class="month-chip" data-month="Octubre">
+          Octubre
+        </div>
+
+        <div class="month-chip" data-month="Noviembre">
+          Noviembre
+        </div>
+
+        <div class="month-chip" data-month="Diciembre">
+          Diciembre
+        </div>
+
+      </div>
+
+      <!-- LISTADO -->
+
+      <div
+        id="deudasList"
+        class="deudas-list"
+      ></div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL NUEVA DEUDA -->
+
+  <div
+    id="deudaModal"
+    class="modal-overlay"
+  >
+
+    <div class="modal-card">
+
+      <h2>
+        Nueva Deuda
+      </h2>
+
+      <input
+        type="text"
+        id="entidadInput"
+        class="input"
+        maxlength="50"
+        placeholder="Nueva entidad"
+      >
+
+      <input
+        list="entidadesExistentes"
+        id="entidadSelector"
+        class="input"
+        placeholder="Seleccionar entidad existente"
+      >
+
+      <datalist
+        id="entidadesExistentes"
+      ></datalist>
+
+      <select
+        id="mesInput"
+        class="input"
+      >
+
+        <option>Enero</option>
+        <option>Febrero</option>
+        <option>Marzo</option>
+        <option>Abril</option>
+        <option>Mayo</option>
+        <option>Junio</option>
+        <option>Julio</option>
+        <option>Agosto</option>
+        <option>Septiembre</option>
+        <option>Octubre</option>
+        <option>Noviembre</option>
+        <option>Diciembre</option>
+
+      </select>
+
+      <input
+        type="number"
+        id="cantidadInput"
+        class="input"
+        min="1"
+        step="0.01"
+        placeholder="Cantidad"
+      >
+
+      <label
+        class="checkbox-row"
+      >
+
+        <input
+          type="checkbox"
+          id="apartadoInput"
+        >
+
+        Ya aparté este dinero
+
+      </label>
+
+      <div
+        id="formError"
+        class="error-message"
+      ></div>
+
+      <div
+        class="modal-actions"
+      >
+
+       
+
+        <button
+          id="btnSave"
+          class="primary-btn"
+        >
+          Guardar
+        </button>
+
+         <button
+          id="btnCancel"
+          class="secondary-btn"
+        >
+          Cancelar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- MODAL DETALLE / EDICIÓN -->
+
+  <div
+    id="detailsModal"
+    class="modal-overlay"
+  >
+
+    <div class="modal-card">
+
+      <h2>
+        Editar Deuda
+      </h2>
+
+      <div class="detail-group">
+
+        <label>
+          Entidad
+        </label>
+
+        <input
+          type="text"
+          id="editEntidad"
+          class="input"
+          maxlength="50"
+        >
+
+      </div>
+
+      <div class="detail-group">
+
+        <label>
+          Mes
+        </label>
+
+        <select
+          id="editMes"
+          class="input"
+        >
+
+          <option>Enero</option>
+          <option>Febrero</option>
+          <option>Marzo</option>
+          <option>Abril</option>
+          <option>Mayo</option>
+          <option>Junio</option>
+          <option>Julio</option>
+          <option>Agosto</option>
+          <option>Septiembre</option>
+          <option>Octubre</option>
+          <option>Noviembre</option>
+          <option>Diciembre</option>
+
+        </select>
+
+      </div>
+
+      <div class="detail-group">
+
+        <label>
+          Cantidad
+        </label>
+
+        <input
+          type="number"
+          id="editCantidad"
+          class="input"
+          min="1"
+          step="0.01"
+        >
+
+      </div>
+
+      <label
+        class="checkbox-row"
+      >
+
+        <input
+          type="checkbox"
+          id="editApartado"
+        >
+
+        Dinero apartado
+
+      </label>
+
+      <div
+        class="detail-date"
+        id="detailDate"
+      ></div>
+
+      <div
+        id="detailsError"
+        class="error-message"
+      ></div>
+
+      <!-- GUARDAR CAMBIOS -->
+
+      <div
+        class="modal-actions"
+      >
+
+        <button
+          id="btnUpdateDebt"
+          class="primary-btn"
+        >
+          Guardar Cambios
+        </button>
+
+      </div>
+<br>
+      <!-- ELIMINAR -->
+
+      <div
+        class="modal-actions"
+      >
+
+        <button
+          id="btnDeleteDebt"
+          class="danger-btn"
+        >
+          Eliminar
+        </button>
+
+      </div>
+<br>
+      <!-- CERRAR -->
+
+      <div
+        class="modal-actions"
+      >
+
+        <button
+          id="btnCloseDetails"
+          class="secondary-btn"
+        >
+          Cerrar
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script src="deudas.js"></script>
+
+</body>
+</html>
